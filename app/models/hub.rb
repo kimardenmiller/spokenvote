@@ -7,29 +7,45 @@
 #  description        :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  google_location_id :string(255)
+#  location_id        :string(255)
 #  formatted_location :string(255)
 #
 
 class Hub < ActiveRecord::Base
-  attr_accessible :description, :google_location_id, :group_name, :formatted_location
+  #attr_accessible :description, :location_id, :group_name, :formatted_location, :full_hub, :short_hub
 
   # Associations
-  has_many :votes
-  has_many :proposals, through: :votes
+  has_many :votes, through: :proposals
+  has_many :proposals
 
-  # Named Scopes
-  scope :by_group_name, lambda { |group_name| where("LOWER(group_name) = ?", group_name.downcase) }
-  
-  validates :group_name, presence: true
+  validates :group_name, :location_id, :formatted_location, presence: true
+  validates :group_name, uniqueness: {scope: :formatted_location}
 
-  class << self
-    def by_group
-      order(:group)
+  def full_hub
+    self.group_name + ' - ' + self.formatted_location
+  end
+
+  def short_hub
+    if GooglePlacesAutocompleteService.location_types.include?(self.group_name)
+      split = self.formatted_location.split(',')
+      if split.count > 2
+        ret = split[0] + ', ' +split[2]
+      else
+        ret = self.formatted_location
+      end
+      ret = self.group_name + ' - ' + ret
+    else
+      ret = self.group_name
     end
+    return ret
+  end
 
-    def by_proposal_count
-      Hub.joins(:proposals).select("hubs.id, hubs.group_name, count(proposals.id) as proposals_count").order("proposals_count DESC").group('hubs.id')
+  def select_id 
+    if self.id == 0
+      "#{GooglePlacesAutocompleteService.prefix}#{self.description}"
+    else
+      self.id
     end
   end
+
 end

@@ -1,0 +1,99 @@
+
+// Modal Elements
+
+.dialog-sm {
+  .modal-dialog {
+//    max-width: 200px;
+  }
+}
+
+.modal-dialog {
+  @media (max-width: $grid-float-breakpoint-max) {
+    margin: 5px;
+  }
+}
+
+.modal-header {
+  @media (max-width: $grid-float-breakpoint-max) {
+    padding-top: 0;
+    .close {
+      padding: 5px 1px;
+    }
+  }
+  h2 {
+    color: $happy-blue;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .selectedHub {
+    font-family: $logoTypeFace;
+    color: $basic-brown !important;
+    text-align: right;
+    text-decoration: none;
+    margin-top: -10px;
+    @media (max-width: $grid-float-breakpoint-max) {
+      margin-top: -5px;
+    }
+    .groupName {
+      font-size: 27px;
+      margin-right: 3px;
+      i {
+        font-size: 14px;
+      }
+    }
+    .groupLocation {
+      font-size: 14px;
+      margin-top: -4px;
+      margin-bottom: -6px;
+      margin-right: 3px;
+    }
+    :hover {
+      color: $happy-blue;
+      cursor: pointer;
+    }
+  }
+}
+
+.modal-body {
+  background-color: $modal-body-off-white;
+  padding: 3%;
+  .form-group {
+    padding: 3px 3px 0 3px;
+  }
+  .instructions {
+    color: $soft-brown-text;
+    padding: 0 3% 3% 3%;
+    .avatar {
+      padding: 0 8px;
+      float: left;
+//      height: 100%;     // Keeps text in a block, but causes issues in other places
+      @media (min-width: $grid-float-breakpoint) {
+        padding: 0 15px;
+      }
+      img {
+        width: 35px;
+        height: auto;
+      }
+    }
+  }
+}
+
+.modal-footer {
+  margin: 0;
+  padding: 20px;
+  min-height: 55px;
+  .pull-left {
+    text-align: left;
+  }
+}
+
+// Depreciated
+
+//.modal {
+//  top: 15% !important;
+//  position: fixed !important;
+//}
+
+//.modal-backdrop {
+//  background-color: #000 !important;
+//}

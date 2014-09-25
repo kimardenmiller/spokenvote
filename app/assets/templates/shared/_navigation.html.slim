@@ -1,0 +1,81 @@
+#topBar ng-controller='DashboardCtrl'
+  header.navbar.navbar-default.hidden-md.hidden-lg
+    .navbar-header
+      button.navbar-toggle.pull-left ng-click='sessionSettings.actions.offcanvas=!sessionSettings.actions.offcanvas' type='button' ng-hide='sessionSettings.actions.detailPage == true'
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+
+      .fa.fa-angle-left.fa-2x.navbar-toggle.pull-left ng-href='#' ng-click='backtoTopics()' type='button' ng-show='sessionSettings.actions.detailPage == true'
+
+      a.sv-logo href='/landing'
+        span.spoken Spoken
+        span.vote Vote
+
+      .new-proposal.pull-right ng-click='newTopic()'
+        button.navbar-toggle type='button'
+          .fa.fa-pencil-square-o.fa-2x
+
+      .hub_search-xs role='search'
+        hidden_field_tag id='hub_filter' ui-select2='hubFilterSelect2' ng-model='hubFilter.hubFilter'
+
+  header.navbar.navbar-inverse.navbar-fixed-top.hidden-xs.hidden-sm
+    .container
+      .row
+        .navbar-header.col-xs-2
+          .navbar-brand
+            /a.sv-logo href='/landing' ng-click='clearHubFilter()'
+            a.sv-logo href='/landing'
+              span.spoken Spoken
+              span.vote Vote
+
+        .hub_search.col-xs-5 role='search'
+          .navbar-form
+            hidden_field_tag id='hub_filter' ui-select2='hubFilterSelect2' ng-model='hubFilter.hubFilter'
+
+        .new_topic.navbar-btn.col-xs-2
+          button ng-click='newTopic()' class='btn btn-newTopic btn-bold main'  Start New Topic
+
+        .col-xs-2
+          ul#user_profile.nav.navbar-nav.pull-right
+            li.dropdown data-placement='bottom'
+              a.dropdown-toggle data-toggle='dropdown'
+                b.white() {{ currentUser.first_name || 'Learn' }}
+                b.caret
+
+              ul.dropdown-menu role="menu" aria-labelledby="dropdownMenu"
+                li
+                  a ng-href='/proposals?filter=my' ng-show='currentUser.username'  My Proposals
+                li
+                  a href='#' ng-click='userSettings()'  ng-show='currentUser.username'  Settings
+                li
+                  a href='/admin' ng-show='currentUser["is_admin?"]' target='_blank'  Admin
+                li
+                  a class='divider' ng-show='currentUser.username'
+                li
+                  a href='#' ng-click='signOut()' ng-show='currentUser.username'  Sign Out
+                li
+                  a class='divider' ng-show='currentUser.username'
+                li
+                  a href='/user-forum' target='_blank' User Forum
+                li
+                  a href='/dev-forum' target='_blank' Developer Forum
+                li
+                  a href='https://github.com/Spokenvote/spokenvote/issues?state=open' target='_blank' Open Issues
+                li
+                  a class='divider'
+                li
+                  a href='http://spokenvote.github.io/spokenvote/' target='_blank' Github Page
+                li
+                  a class='divider'
+                li
+                  a href='/terms-of-use' Terms of Use
+
+        .user_area.navbar-btn.col-xs-1
+          .avatar.pull-right ng-show='currentUser.facebook_auth || currentUser.gravatar_hash' ng-href='/proposals?filter=my'  tooltip='{{currentUser.username}}' tooltip-placement='bottom'
+            a href='/proposals?filter=my'
+              ng-include src="'shared/_currentuser_avatar.html'"
+
+          .buttons.navbar-btn.pull-right ng-show='!currentUser.username'
+            button ng-click='signinAuth()' class='btn btn-info btn-bold'  Sign In

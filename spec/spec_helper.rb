@@ -2,7 +2,8 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
+# require 'rspec/autorun'    # Depreciated in 3.0
+require 'email_spec'
 require 'capybara/rspec'
 require 'database_cleaner'
 
@@ -11,13 +12,13 @@ require 'database_cleaner'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
-  # ## Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros::ClassMethods, :type => :controller
+  config.include ControllerMacros::InstanceMethods, :type => :controller
+  config.include EmailSpec::Helpers
+  config.include EmailSpec::Matchers
+
   config.mock_with :rspec
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

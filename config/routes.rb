@@ -1,39 +1,51 @@
 Spokenvote::Application.routes.draw do
 
-  devise_for :users, path_names: { sign_in: "login", sign_out: "logout" },
-                     controllers: { omniauth_callbacks: "omniauth_callbacks", :sessions => 'sessions' }
+  root :to => 'application#index'
 
-  root :to => 'proposals#index'
-  resources :users do
+  ActiveAdmin.routes(self)
+
+  devise_for :users, path_names: { sign_in: "login", sign_out: "logout" },
+                     controllers: { omniauth_callbacks: "omniauth_callbacks", :sessions => 'sessions', :registrations => "registrations", :authentications => "authentications" }
+
+  devise_scope :user do
+    post 'authentications', to: 'authentications#create'
+  end
+
+  resources :users, only: [:show] do
     resources :proposals, only: [:index]
   end
 
-  resources :votes
   resources :proposals do
-    collection do
-      post 'search'
+    member do
+      get :is_editable
+      get :related_vote_in_tree
+      get :related_proposals
     end
   end
-  resources :hubs do
+
+  resources :votes, only: [:create]
+
+  resources :hubs, only: [:create, :index, :show] do
     resources :proposals
   end
 
-  match 'about' => 'pages#about'
-  match 'help' => 'pages#help'
-  match 'developers' => 'pages#developers'
-  match 'dev' => 'pages#developers'
-  match 'user_nav' => 'pages#user_nav'
+  get 'currentuser' => 'users#currentuser'
+
+  require 'robots_generator'
+  get '/robots.txt' => RobotsGenerator
+  get 'sitemap.xml' => 'sitemaps#index', format: 'xml', as: :sitemap
+
+
+  get 'voter_mailer/vote_notification'
+
+  get '/*page' => 'application#index'
+  get ':controller(/:action(/:id))(.:format)' => redirect('/')
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
@@ -79,5 +91,4 @@ Spokenvote::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end

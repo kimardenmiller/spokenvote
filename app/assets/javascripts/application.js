@@ -1,21 +1,41 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// the compiled file.
-//
-// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
-// GO AFTER THE REQUIRES BELOW.
-//
-//= require jquery
-//= require jquery_ujs
-//= require jquery_nested_form
-//= require select2
-//= require bootstrap-all
-//= require bootstrap-modal
-//= require bootstrap-modalmanager
-//= require holder
-//= require_tree .
+// require jquery_ujs               # Just jquery, right?
+// require jquery_nested_form       # Not quite sure if we need or don't need.
+
+// require bootstrap/affix
+// require bootstrap/alert
+// require bootstrap/button
+// require bootstrap/carousel
+// require bootstrap/dropdown
+// require bootstrap/scrollspy
+// require bootstrap/modal
+// require bootstrap/tooltip
+// require bootstrap/popover
+// require bootstrap/tab
+
+//= require bootstrap/transition
+//= require bootstrap/collapse
+
+// require angular-ui
+//= require angular-ui-utils
+//= require angular-ui-select2
+// require select2-click_leak_fix
+
+// require holder           #Don't believe this is in use
+// require viewport.min     #Don't believe we're calling this any more
+// require angular-strap
+
+//= require ui-bootstrap/modal
+//= require ui-bootstrap/transition
+//= require ui-bootstrap/dropdownToggle
+//= require ui-bootstrap/tooltip
+//= require ui-bootstrap/bindHtml
+//= require ui-bootstrap/position
+
+//= require angular-rails-templates
+//= require_tree ../templates
+//= require angular/spokenvote.coffee
+//= require_tree ./angular
+
+//= require angular-loading-bar
+//= require ./vendor/add2homeConfig
+//= require add2home

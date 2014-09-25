@@ -1,0 +1,22 @@
+#introAuthModal
+  .modal-header
+    .pull-right( class='close' ng-click='$close()' ) &times;
+    /h2.modal-title Delete Proposal
+
+  .modal-body
+    #alertContainer
+      .modalAlert( alert-bar alertmessageclear='alertService.alertClass' ng-show='alertService.alertDestination=="modal"' )
+
+    .auth-partners
+      .instructions
+        .partner-logo
+          img src='/assets/icons/providers/FB-f-Logo__blue_50.png'
+        h4 Simplified Facebook sign in helps prevent vote duplication.
+        h4 We will <i>not</i> use your friends list or post anything without asking you first.
+
+  .modal-footer
+    fieldset
+      .form-group
+        .controls
+          button( ng-click="$dismiss('cancel')" class='btn btn-bold' ) Cancel
+          button( ng-click="$close('signIn')" class='btn btn-primary btn-bold' ) Sign In

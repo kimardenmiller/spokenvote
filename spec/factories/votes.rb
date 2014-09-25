@@ -1,8 +1,5 @@
 FactoryGirl.define do
   factory :vote do
-    proposal
-    hub
-    user
-    comment { Faker::Lorem.sentence }
+    comment  'Comment on my vote'
   end
 end
